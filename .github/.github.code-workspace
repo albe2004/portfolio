@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": ".github",
+			"path": "."
+		},
+		{
+			"name": "public",
+			"path": "../public"
+		},
+		{
+			"name": "portfolio",
+			"path": "../portfolio"
+		},
+		{
+			"name": "src",
+			"path": "../src"
+		}
+	]
+}

@@ -1,0 +1,2 @@
+# Questo file impedisce a GitHub Pages di processare il sito con Jekyll.
+# Senza, i file che iniziano con "_" verrebbero ignorati.
