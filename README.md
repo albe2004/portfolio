@@ -1,110 +1,89 @@
-# Andrea Alberici — Portfolio (React + Vite + Tailwind CSS)
+# Andrea Alberici — Portfolio
 
-Portfolio personale bilingue (IT/EN) ispirato allo stile minimal/dark del sito
-[dymasalfin.web.id](https://www.dymasalfin.web.id/), con i contenuti reali del
-portfolio di Andrea Alberici ([albe2004.github.io](https://albe2004.github.io/)).
+Portfolio personale bilingue (IT/EN) — React + Vite + Tailwind v4 + Framer Motion.
+Design ispirato a **dymasalfin.web.id** · Contenuti reali da **albe2004.github.io**.
 
-## ✨ Funzionalità
+## Sezioni
 
-- **Sezioni**: Home (hero + chi sono), Progetti (con filtri per categoria e modale di
-  dettaglio), Contatti.
-- **Download CV**: il bottone "Scarica CV" nella navbar avvia subito il download del
-  PDF in `public/cv/Andrea_Alberici_CV.pdf`.
-- **Download progetti**: ogni progetto ha un pulsante "Scarica presentazione" che
-  scarica il file collegato in `public/downloads/`.
-- **Lingua IT/EN**: switch lingua in navbar, con rilevamento automatico della lingua
-  del browser al primo accesso (salvata poi in `localStorage`).
-- **Font**: Inter (con fallback Roboto), caricati da Google Fonts.
-- **Animazioni**: reveal on scroll, marquee, micro-interazioni con Framer Motion.
-- **Responsive**: ottimizzato da mobile a desktop.
+- **Home** — hero animato, statistiche, bio
+- **Progetti** — 17 progetti con filtri e download delle presentazioni PDF
+- **CV** — esperienza, formazione, competenze + **download istantaneo del CV PDF** (generato nel browser, bilingue)
+- **Contatti** — LinkedIn / GitHub / Instagram (+ email, se configurata)
+- **Lingua IT/EN** — toggle in alto a destra, salvato nel browser
 
-## 🚀 Avvio in locale
+---
+
+## 🚀 Pubblicarlo su GitHub (scegli UNA delle due strade)
+
+### ✅ Strada A — AUTOMATICA (consigliata): fai push e basta
+
+Il workflow già incluso fa tutto: installa, compila e pubblica da solo.
+
+1. Carica **tutto il progetto** (src, public, package.json, index.html, la cartella
+   `.github`, …) nel tuo repository, branch `main`.
+2. Vai su **Settings → Pages → Build and deployment → Source: `GitHub Actions`**.
+3. Fai `git push` (oppure carica i file da web).
+4. Apri la scheda **Actions**: quando il workflow è verde, il sito è online.
+
+> Se usi il repo `albe2004.github.io` l'indirizzo sarà `https://albe2004.github.io/`
+> Il vecchio sito viene sostituito dalla nuova versione.
+
+### 📦 Strada B — MANUALE: carica i file già compilati
+
+1. In locale: `npm install` → `npm run build`
+2. Cartella generata: **`dist/`**
+3. Carica **il contenuto** di `dist/` (non la cartella stessa!) nella posizione
+   che serve:
+   - repo `username.github.io` → nella **root** del branch `main`
+   - altro repo → in **`docs/`** su `main`, poi
+     Settings → Pages → Source: *Deploy from a branch* → `main` → **`/docs`**
+
+⚠️ **ERRORI CLASSICI SE IL SITO NON PARTE**
+
+| Sintomo | Causa | Soluzione |
+|---|---|---|
+| Pagina bianca | Hai caricato il **sorgente**, non `dist/` | Usa la Strada A, oppure carica `dist/` |
+| Testo ok ma immagini mancanti | Mancano le cartelle `img/` e `downloads/` | Carica *tutto* il contenuto di `dist/` |
+| Workflow fallisce | Pages non è in modalità Actions | Settings → Pages → Source: **GitHub Actions** |
+| 404 sulle pagine interne | — | Non succede: il sito è una pagina sola, niente router |
+
+Tutti i percorsi sono **relativi**: funziona sia su `username.github.io`
+sia su `username.github.io/repo/`.
+
+---
+
+## 📄 PDF dei progetti
+
+I bottoni **"Scarica la presentazione"** puntano ai file dentro
+[`public/downloads/`](public/downloads/README.md). Lì c'è la tabella con i nomi
+richiesti e il corrispettivo file del vecchio sito: rinomina, incolla, fine.
+
+Se un PDF manca, il bottone porta a una pagina 404 ma il resto del sito funziona
+comunque (le immagini hanno un fallback grafico apposta).
+
+## ✏️ Personalizzazioni rapide
+
+Tutto in un solo file: **`src/data/portfolio.ts`**
+
+| Cosa | Dove |
+|---|---|
+| Email di contatto | `contact.email` (vuota = pulsante nascosto) |
+| Testi IT / EN | dizionario `t` |
+| Progetti (titolo, descrizione, immagine, PDF) | array `projects` |
+| CV | `experience`, `education`, `skillGroups` |
+
+## 🎓 CV in PDF
+
+Il pulsante **CV** (in alto a destra) genera e scarica subito un PDF
+brandizzato, in italiano o inglese a seconda della lingua attiva.
+Codice in `src/lib/cvPdf.ts`. Se preferisci il tuo PDF "fatto a mano":
+mettilo in `public/downloads/CV-Andrea-Alberici.pdf` e sostituisci la chiamata
+a `downloadCvPdf()` con un semplice `<a href="downloads/CV-Andrea-Alberici.pdf" download>`.
+
+## 🛠 Sviluppo in locale
 
 ```bash
 npm install
-npm run dev
+npm run dev      # anteprima
+npm run build    # compila in dist/
 ```
-
-Build di produzione:
-
-```bash
-npm run build
-npm run preview
-```
-
-## 🖊️ Come personalizzare i contenuti
-
-Tutti i contenuti testuali (IT/EN) sono centralizzati in:
-
-- `src/i18n/translations.ts` → testi di navbar, hero, chi sono, progetti, contatti, footer.
-- `src/data/projects.ts` → elenco progetti (titolo, descrizione, categoria, immagine,
-  link al file scaricabile).
-- `src/data/profile.ts` → email e link social (GitHub, LinkedIn, Behance, Instagram).
-
-### Sostituire foto e file reali
-
-1. **Foto progetti**: sostituisci i file in `public/images/projects/` (stessi nomi) o
-   aggiorna i percorsi `image` in `src/data/projects.ts`.
-2. **File scaricabili dei progetti**: aggiungi i tuoi PDF/allegati in
-   `public/downloads/` con lo stesso nome indicato in `downloadUrl`, oppure incolla
-   link esterni (Drive, Behance, Notion...).
-3. **Curriculum**: sostituisci `public/cv/Andrea_Alberici_CV.pdf` con il tuo CV reale
-   (stesso nome file) — il bottone in navbar lo scaricherà automaticamente.
-4. **Immagine hero**: sostituisci `public/images/hero-graphic.jpg` con una tua foto o
-   grafica.
-
-## 🎨 Palette e stile
-
-Colori e font sono definiti in `src/index.css` tramite `@theme` (Tailwind CSS v4):
-
-- `--color-ink` — nero quasi puro, testo principale.
-- `--color-paper` — bianco caldo, sfondo principale.
-- `--color-accent` / `--color-accent-dark` — verde acido, colore di accento.
-- `--font-sans` — Inter / Roboto.
-
-## 📁 Struttura principale
-
-```
-src/
-  components/     → componenti UI (Navbar, Hero, About, Projects, Contact, Footer, ...)
-  data/           → dati progetti e profilo
-  i18n/           → traduzioni e contesto lingua
-  utils/          → utility (cn per classNames)
-public/
-  cv/             → CV scaricabile
-  downloads/      → file scaricabili dei progetti
-  images/         → immagini hero e progetti
-```
-
-## 📦 Come importare su GitHub
-
-1. Scarica/esporta questo progetto dall'ambiente di sviluppo.
-2. Crea un nuovo repository su GitHub (es. `andrea-alberici-portfolio`).
-3. Nella cartella del progetto in locale:
-
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: portfolio Andrea Alberici"
-   git branch -M main
-   git remote add origin https://github.com/<tuo-utente>/<nome-repo>.git
-   git push -u origin main
-   ```
-
-4. **Pubblicare su GitHub Pages** (opzionale):
-   - Installa `gh-pages`: `npm install -D gh-pages`
-   - Aggiungi negli script di `package.json`: `"deploy": "vite build && gh-pages -d dist"`
-   - Se pubblichi su `https://<utente>.github.io/<repo>/` (progetto, non user page),
-     imposta `base: "/<repo>/"` in `vite.config.ts`.
-   - Esegui `npm run deploy`.
-
-   In alternativa puoi collegare il repository a **Vercel** o **Netlify** per un
-   deploy automatico ad ogni push, senza configurazioni aggiuntive.
-
-## 🔧 Stack tecnico
-
-- React 19 + TypeScript
-- Vite 7
-- Tailwind CSS v4
-- Framer Motion (animazioni)
-- lucide-react (icone)
