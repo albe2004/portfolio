@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download } from "lucide-react";
 import Img from "@/components/Img";
+import Carousel from "@/components/Carousel";
+import { galleries } from "@/data/posters";
 import { Kicker, Reveal } from "@/components/Reveal";
 import { EASE, useLang } from "@/lib/lang";
 import { catKeys, projects, type CatKey, type Project } from "@/data/portfolio";
@@ -10,6 +12,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 function Card({ p, index }: { p: Project; index: number }) {
   const { strings: S, lang } = useLang();
+  const gallery = galleries[p.slug];
   return (
     <motion.article
       layout
@@ -19,29 +22,42 @@ function Card({ p, index }: { p: Project; index: number }) {
       transition={{ duration: 0.65, ease: EASE }}
       className="group flex flex-col overflow-hidden rounded-[28px] border border-hairline bg-white shadow-card transition-shadow duration-500 hover:shadow-lift"
     >
-      <a href={p.file} download className="block" aria-label={`${p.title[lang]} — PDF`}>
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <Img
-            src={p.img}
-            alt={p.title[lang]}
-            label={p.title[lang]}
-            className="h-full w-full object-cover transition-transform duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent opacity-60" />
-          <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/25 px-2.5 py-1 text-[11px] font-bold tracking-wider text-white backdrop-blur-md">
+      {gallery ? (
+        <div className="relative">
+          <Carousel images={gallery} alt={p.title[lang]} label={p.title[lang]} />
+          <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/30 bg-black/25 px-2.5 py-1 text-[11px] font-bold tracking-wider text-white backdrop-blur-md">
             {pad(index + 1)}
           </span>
           <span
-            className="absolute right-4 top-4 h-2.5 w-2.5 rounded-full ring-2 ring-white/50"
+            className="pointer-events-none absolute right-4 top-4 z-10 h-2.5 w-2.5 rounded-full ring-2 ring-white/50"
             style={{ background: p.tint }}
           />
-          {/* hover download pill */}
-          <span className="absolute bottom-4 right-4 flex translate-y-3 items-center gap-2 rounded-full bg-white px-4 py-2.5 text-[11px] font-bold text-ink opacity-0 shadow-lift transition-all duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100">
-            <Download className="h-3.5 w-3.5" />
-            PDF
-          </span>
         </div>
-      </a>
+      ) : (
+        <a href={p.file} download className="block" aria-label={`${p.title[lang]} — PDF`}>
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <Img
+              src={p.img}
+              alt={p.title[lang]}
+              label={p.title[lang]}
+              className="h-full w-full object-cover transition-transform duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent opacity-60" />
+            <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/25 px-2.5 py-1 text-[11px] font-bold tracking-wider text-white backdrop-blur-md">
+              {pad(index + 1)}
+            </span>
+            <span
+              className="absolute right-4 top-4 h-2.5 w-2.5 rounded-full ring-2 ring-white/50"
+              style={{ background: p.tint }}
+            />
+            {/* hover download pill */}
+            <span className="absolute bottom-4 right-4 flex translate-y-3 items-center gap-2 rounded-full bg-white px-4 py-2.5 text-[11px] font-bold text-ink opacity-0 shadow-lift transition-all duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100">
+              <Download className="h-3.5 w-3.5" />
+              PDF
+            </span>
+          </div>
+        </a>
+      )}
 
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: p.tint === "#d6ff4b" ? "#7c9b10" : p.tint }}>
@@ -50,18 +66,24 @@ function Card({ p, index }: { p: Project; index: number }) {
         <h3 className="text-lg font-bold leading-snug tracking-tight text-ink">{p.title[lang]}</h3>
         <p className="mt-2 text-sm leading-relaxed text-ink-soft">{p.desc[lang]}</p>
 
-        <div className="mt-auto pt-5">
-          <a
-            href={p.file}
-            download
-            className="group/dl inline-flex items-center gap-2 text-[13px] font-bold text-ink transition-colors hover:text-violet"
-          >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-300 group-hover/dl:border-violet group-hover/dl:bg-violet">
-              <Download className="h-3.5 w-3.5 transition-colors group-hover/dl:text-white" />
-            </span>
-            <span className="link-sweep">{S.projects.download}</span>
-          </a>
-        </div>
+        {gallery ? (
+          <p className="mt-auto pt-5 text-[13px] font-bold text-ink-soft">
+            {gallery.length} {lang === "it" ? "poster · scorri per vederli" : "posters · swipe to browse"}
+          </p>
+        ) : (
+          <div className="mt-auto pt-5">
+            <a
+              href={p.file}
+              download
+              className="group/dl inline-flex items-center gap-2 text-[13px] font-bold text-ink transition-colors hover:text-violet"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-300 group-hover/dl:border-violet group-hover/dl:bg-violet">
+                <Download className="h-3.5 w-3.5 transition-colors group-hover/dl:text-white" />
+              </span>
+              <span className="link-sweep">{S.projects.download}</span>
+            </a>
+          </div>
+        )}
       </div>
     </motion.article>
   );
