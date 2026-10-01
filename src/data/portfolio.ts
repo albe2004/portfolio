@@ -280,7 +280,7 @@ export const projects: Project[] = [
   {
     slug: "accessibility-1",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/accessibility-1.png",
     file: "downloads/accessibility-audit-1.pdf",
     tint: "#6c46f0",
     title: { it: "Accessibility Audit — Pt. 1", en: "Accessibility Audit — Pt. 1" },
@@ -292,7 +292,7 @@ export const projects: Project[] = [
   {
     slug: "accessibility-2",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/accessibility-2.png",
     file: "downloads/accessibility-audit-2.pdf",
     tint: "#4368f2",
     title: { it: "Accessibility Audit — Pt. 2", en: "Accessibility Audit — Pt. 2" },
@@ -304,7 +304,7 @@ export const projects: Project[] = [
   {
     slug: "discovery-1",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/discovery-1.png",
     file: "downloads/discovery-1.pdf",
     tint: "#7a5cf0",
     title: { it: "Discovery — Pt. 1", en: "Discovery — Pt. 1" },
@@ -316,7 +316,7 @@ export const projects: Project[] = [
   {
     slug: "discovery-2",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/discovery-2.png",
     file: "downloads/discovery-2.pdf",
     tint: "#9a6ee8",
     title: { it: "Discovery — Pt. 2", en: "Discovery — Pt. 2" },
@@ -328,7 +328,7 @@ export const projects: Project[] = [
   {
     slug: "user-test-1",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/user-test-1.png",
     file: "downloads/user-test-1.pdf",
     tint: "#5530d6",
     title: { it: "User Test — Pt. 1", en: "User Test — Pt. 1" },
@@ -340,7 +340,7 @@ export const projects: Project[] = [
   {
     slug: "user-test-2",
     cat: "research",
-    img: "img/p-research.png",
+    img: "img/user-test-2.png",
     file: "downloads/user-test-2.pdf",
     tint: "#4368f2",
     title: { it: "User Test — Pt. 2", en: "User Test — Pt. 2" },
@@ -352,7 +352,7 @@ export const projects: Project[] = [
   {
     slug: "wireframing-1",
     cat: "uxui",
-    img: "img/p-screens.png",
+    img: "img/wireframing-1.png",
     file: "downloads/wireframing-1.pdf",
     tint: "#8b8b96",
     title: { it: "Wireframing — Pt. 1", en: "Wireframing — Pt. 1" },
@@ -364,7 +364,7 @@ export const projects: Project[] = [
   {
     slug: "wireframing-2",
     cat: "uxui",
-    img: "img/p-screens.png",
+    img: "img/wireframing-2.png",
     file: "downloads/wireframing-2.pdf",
     tint: "#a3a3ae",
     title: { it: "Wireframing — Pt. 2", en: "Wireframing — Pt. 2" },
@@ -376,7 +376,7 @@ export const projects: Project[] = [
   {
     slug: "user-interface-1",
     cat: "uxui",
-    img: "img/p-screens.png",
+    img: "img/user-interface-1.png",
     file: "downloads/user-interface-1.pdf",
     tint: "#6c46f0",
     title: { it: "User Interface — Pt. 1", en: "User Interface — Pt. 1" },
@@ -388,7 +388,7 @@ export const projects: Project[] = [
   {
     slug: "user-interface-2",
     cat: "uxui",
-    img: "img/p-screens.png",
+    img: "img/user-interface-2.png",
     file: "downloads/user-interface-2.pdf",
     tint: "#5530d6",
     title: { it: "User Interface — Pt. 2", en: "User Interface — Pt. 2" },
