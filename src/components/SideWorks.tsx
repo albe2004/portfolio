@@ -195,7 +195,7 @@ export default function SideWorks() {
             {it ? "Nel tempo libero" : "On the side"}
           </span>
           <h2 className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl">
-            {it ? "Poster, per piacere" : "Posters, for fun"}
+            {it ? "Poster e grafiche, per piacere" : "Posters & graphics, just for fun"}
             <span className="text-volt">.</span>
           </h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
@@ -241,12 +241,12 @@ export default function SideWorks() {
               onClick={() => {
                 if (!drag.current.moved) setOpen((k % B) % n);
               }}
-              aria-label={w.title ?? `Poster ${(k % B) % n + 1}`}
+              aria-label={w.title ?? `${it ? "Lavoro" : "Work"} ${(k % B) % n + 1}`}
               className="group relative shrink-0 overflow-hidden rounded-2xl bg-white/5 text-left ring-1 ring-white/10 transition-transform duration-500 hover:-translate-y-1.5"
             >
               <Img
                 src={w.src}
-                alt={w.title ?? `Poster ${(k % B) % n + 1}`}
+                alt={w.title ?? `${it ? "Lavoro" : "Work"} ${(k % B) % n + 1}`}
                 priority
                 className="block h-[360px] w-auto select-none md:h-[520px]"
                 fallbackClassName="h-[360px] w-[250px] md:h-[520px] md:w-[360px]"
@@ -295,7 +295,7 @@ export default function SideWorks() {
               className="flex max-h-full max-w-full flex-col items-center gap-3"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={sideWorks[open].src} alt={sideWorks[open].title ?? `Poster ${open + 1}`} className="max-h-[84vh] max-w-[92vw] rounded-xl object-contain" />
+              <img src={sideWorks[open].src} alt={sideWorks[open].title ?? `${it ? "Lavoro" : "Work"} ${open + 1}`} className="max-h-[84vh] max-w-[92vw] rounded-xl object-contain" />
               <figcaption className="text-xs font-bold uppercase tracking-[0.18em] text-white/60">
                 {sideWorks[open].title ? `${sideWorks[open].title} · ` : ""}
                 {open + 1} / {n}

@@ -91,10 +91,14 @@ export const t = {
       skills: "Competenze",
       interests: "Interessi",
       skillGroups: [
-        { title: "Design tools", items: ["Figma", "Canva", "Adobe Illustrator"] },
-        { title: "Web & Code", items: ["HTML", "CSS / SCSS", "JavaScript", "Bootstrap", "WordPress", "ClickFunnels"] },
+        { title: "Design tools", items: ["Figma", "Canva", "Adobe Illustrator", "Adobe Photoshop", "AI"] },
+        { title: "Web & Code", items: ["HTML", "CSS / SCSS", "Bootstrap", "WordPress", "ClickFunnels"] },
         { title: "Editing", items: ["CapCut", "DaVinci Resolve"] },
         { title: "Lingue", items: ["Italiano — madrelingua", "Inglese"] },
+        {
+          title: "Soft skills",
+          items: ["Creatività", "Precisione", "Gestione del tempo", "Team working", "Problem solving", "Orientamento all'utente", "Autonomia", "Networking"],
+        },
       ],
     },
     contact: {
@@ -184,10 +188,14 @@ export const t = {
       skills: "Skills",
       interests: "Interests",
       skillGroups: [
-        { title: "Design tools", items: ["Figma", "Canva", "Adobe Illustrator"] },
-        { title: "Web & Code", items: ["HTML", "CSS / SCSS", "JavaScript", "Bootstrap", "WordPress", "ClickFunnels"] },
+        { title: "Design tools", items: ["Figma", "Canva", "Adobe Illustrator", "Adobe Photoshop", "AI"] },
+        { title: "Web & Code", items: ["HTML", "CSS / SCSS", "Bootstrap", "WordPress", "ClickFunnels"] },
         { title: "Editing", items: ["CapCut", "DaVinci Resolve"] },
         { title: "Languages", items: ["Italian — native", "English"] },
+        {
+          title: "Soft skills",
+          items: ["Creativity", "Precision", "Time management", "Teamwork", "Problem solving", "User orientation", "Autonomy", "Networking"],
+        },
       ],
     },
     contact: {

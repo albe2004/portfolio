@@ -121,7 +121,16 @@ export default function CvSection({ onCv }: CvSectionProps) {
               </Reveal>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2" key={lang}>
                 {S.cv.skillGroups.map((g, i) => (
-                  <Reveal key={g.title} delay={i * 0.06} y={20}>
+                  <Reveal
+                    key={g.title}
+                    delay={i * 0.06}
+                    y={20}
+                    className={
+                      i === S.cv.skillGroups.length - 1 && S.cv.skillGroups.length % 2 === 1
+                        ? "sm:col-span-2"
+                        : ""
+                    }
+                  >
                     <div className="h-full rounded-3xl border border-hairline bg-white p-6 shadow-card">
                       <div className="mb-4 text-[11px] font-extrabold uppercase tracking-[0.18em] text-mist">
                         {g.title}
