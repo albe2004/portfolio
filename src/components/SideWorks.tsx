@@ -4,10 +4,25 @@ import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import Img from "@/components/Img";
 import { Reveal } from "@/components/Reveal";
 import { EASE, useLang } from "@/lib/lang";
-import { sideWorks } from "@/data/posters";
+import { sideWorks, type SideWork } from "@/data/posters";
 
 /** Spazio laterale che allinea la fila al resto della pagina (max-w-7xl + px-6) */
 const SIDE = "max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))";
+
+/* Trova i file che esistono davvero (con o senza estensione nel nome) */
+const EXTS = ["jpg", "jpeg", "png", "webp", "JPG", "PNG"];
+const tryLoad = (src: string) =>
+  new Promise<boolean>((res) => {
+    const im = new Image();
+    im.onload = () => res(true);
+    im.onerror = () => res(false);
+    im.src = src;
+  });
+async function resolveWork(w: SideWork): Promise<SideWork | null> {
+  const candidates = /\.[a-zA-Z0-9]{2,5}$/.test(w.src) ? [w.src] : EXTS.map((e) => `${w.src}.${e}`);
+  for (const c of candidates) if (await tryLoad(c)) return { ...w, src: c };
+  return null;
+}
 
 /** velocità dello scorrimento automatico, in pixel al secondo */
 const SPEED = 45;
@@ -17,14 +32,25 @@ const SETS = 4;
 export default function SideWorks() {
   const { lang } = useLang();
   const it = lang === "it";
-  const n = sideWorks.length;
+  const [found, setFound] = useState<SideWork[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    Promise.all(sideWorks.map(resolveWork)).then((r) => {
+      if (alive) setFound(r.filter((x): x is SideWork => x !== null));
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const list = useMemo(() => found ?? [], [found]);
+  const n = list.length;
 
   /* con pochi lavori ripeto l'elenco, così la fila è sempre abbastanza lunga */
   const base = useMemo(() => {
     if (n === 0) return [];
     const len = n >= 6 ? n : n * Math.ceil(6 / n);
-    return Array.from({ length: len }, (_, i) => sideWorks[i % n]);
-  }, [n]);
+    return Array.from({ length: len }, (_, i) => list[i % n]);
+  }, [n, list]);
   const B = base.length;
   const items = useMemo(() => Array.from({ length: SETS }, () => base).flat(), [base]);
 
@@ -93,7 +119,7 @@ export default function SideWorks() {
       cancelAnimationFrame(raf);
       io.disconnect();
     };
-  }, [loopWidth]);
+  }, [loopWidth, n > 0]);
 
   /* scroll manuale (dito, trascinamento, frecce): tengo il giro infinito */
   const onScroll = () => {
@@ -295,9 +321,9 @@ export default function SideWorks() {
               className="flex max-h-full max-w-full flex-col items-center gap-3"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={sideWorks[open].src} alt={sideWorks[open].title ?? `${it ? "Lavoro" : "Work"} ${open + 1}`} className="max-h-[84vh] max-w-[92vw] rounded-xl object-contain" />
+              <img src={list[open].src} alt={list[open].title ?? `${it ? "Lavoro" : "Work"} ${open + 1}`} className="max-h-[84vh] max-w-[92vw] rounded-xl object-contain" />
               <figcaption className="text-xs font-bold uppercase tracking-[0.18em] text-white/60">
-                {sideWorks[open].title ? `${sideWorks[open].title} · ` : ""}
+                {list[open].title ? `${list[open].title} · ` : ""}
                 {open + 1} / {n}
               </figcaption>
             </motion.figure>
