@@ -77,7 +77,6 @@ export const t = {
         uxui: "UX/UI Design",
         webdev: "Sviluppo Web",
         copy: "Copywriting",
-        graphic: "Graphic Design",
       } as Record<string, string>,
       hint: "I progetti si aprono in PDF — presentazioni complete, case study e processo.",
     },
@@ -171,7 +170,6 @@ export const t = {
         uxui: "UX/UI Design",
         webdev: "Web Development",
         copy: "Copywriting",
-        graphic: "Graphic Design",
       } as Record<string, string>,
       hint: "Projects open as PDF — full presentations, case studies and process.",
     },
@@ -216,7 +214,7 @@ export type TStrings = (typeof t)["it"];
 /*  PROJECTS                                                           */
 /* ------------------------------------------------------------------ */
 
-export type CatKey = "brand" | "research" | "uxui" | "webdev" | "copy" | "graphic";
+export type CatKey = "brand" | "research" | "uxui" | "webdev" | "copy";
 
 export interface Project {
   slug: string;
@@ -421,21 +419,9 @@ export const projects: Project[] = [
       en: "Wrote conversion-focused copy for a sustainable fashion brand, combining audience analysis, storytelling, and persuasion principles.",
     },
   },
-  {
-    slug: "poster-collection",
-    cat: "graphic",
-    img: "img/p-posters.png",
-    file: "downloads/graphic-design-posters.pdf",
-    tint: "#e05252",
-    title: { it: "Graphic Design — Poster Collection", en: "Graphic Design — Poster Collection" },
-    desc: {
-      it: "Raccolta di lavori grafici personali: poster cinematografici, studi di lettering, loghi per contest e illustrazioni editoriali.",
-      en: "A collection of personal graphic works: movie posters, lettering studies, contest logos and editorial illustrations.",
-    },
-  },
 ];
 
-export const catKeys: CatKey[] = ["brand", "research", "uxui", "webdev", "copy", "graphic"];
+export const catKeys: CatKey[] = ["brand", "research", "uxui", "webdev", "copy"];
 
 /* ------------------------------------------------------------------ */
 /*  CV DATA                                                            */
