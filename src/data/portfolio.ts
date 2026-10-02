@@ -444,64 +444,64 @@ export const catKeys: CatKey[] = ["brand", "research", "uxui", "webdev", "copy",
 export interface CvItem {
   org: string;
   role: { it: string; en: string };
+  /** Tipo di collaborazione, come nel CV (es. "Collaborazione freelance") */
+  type: { it: string; en: string };
+  /** Periodo, come nel CV (es. "Novembre 2025 – Giugno 2026") */
+  period: { it: string; en: string };
   desc: { it: string; en: string };
 }
 
+/* Ordine cronologico, dal più vecchio al più recente (come nel CV).
+   Per mostrare prima il più recente basta invertire l'ordine dei blocchi. */
 export const experience: CvItem[] = [
   {
-    org: "Lost Frame",
-    role: { it: "Brand Identity Designer", en: "Brand Identity Designer" },
-    desc: {
-      it: "Costruzione di brand identity e design system (colore, tipografia, componenti), applicati a template social riutilizzabili in più formati.",
-      en: "Built brand identity + design system (color, type, components) and applied it to reusable social templates across formats.",
-    },
-  },
-  {
-    org: "Lifestyle Archive",
-    role: { it: "Art Director & Content Designer", en: "Art Director & Content Designer" },
-    desc: {
-      it: "Art direction e content design editoriale (carousel/reel), video editing e sistema visivo per un archivio lifestyle digitale.",
-      en: "Art direction and editorial content design (carousels/reels), plus video editing and visual system for a digital lifestyle archive.",
-    },
-  },
-  {
-    org: "Growtize",
-    role: { it: "UX/UI & Web Designer", en: "UX/UI & Web Designer" },
-    desc: {
-      it: "Progettazione e sviluppo di landing page e funnel (Figma → ClickFunnels/WordPress) e asset visivi per social e YouTube.",
-      en: "Designed and built landing pages and funnels (Figma → ClickFunnels/WordPress), plus supporting visual assets for social and YouTube.",
-    },
-  },
-  {
-    org: "Growtize Training",
-    role: { it: "Funnel Designer & CRO", en: "Funnel Designer & CRO" },
-    desc: {
-      it: "Pagine di vendita/opt-in e strutture funnel complete con principi CRO; redesign completo del sito per un'azienda del gruppo.",
-      en: "Created sales/opt-in pages and complete funnel structures, applying CRO principles; delivered a full website redesign for a group company.",
-    },
-  },
-  {
-    org: "Satirae",
-    role: { it: "Editorial & Graphic Designer", en: "Editorial & Graphic Designer" },
+    org: "@ssatirae",
+    role: { it: "Visual & Editorial Designer", en: "Visual & Editorial Designer" },
+    type: { it: "Collaborazione creativa", en: "Creative collaboration" },
+    period: { it: "2025", en: "2025" },
     desc: {
       it: "Impaginazione editoriale e design di post per il magazine, in collaborazione con il team su Figma e Canva.",
       en: "Editorial layout and visual post design for the magazine, collaborating with the team using Figma and Canva.",
     },
   },
   {
-    org: "OgniDoveViaggi",
-    role: { it: "Social Media Graphic Designer", en: "Social Media Graphic Designer" },
+    org: "Growtize Training Program",
+    role: { it: "Funnels & Conversion Designer", en: "Funnels & Conversion Designer" },
+    type: { it: "Programma di formazione intensiva", en: "Intensive training program" },
+    period: { it: "Luglio – Settembre 2025", en: "July – September 2025" },
     desc: {
-      it: "Post social e asset grafici allineati allo stile del brand.",
-      en: "Created social posts and graphic assets aligned with brand style.",
+      it: "Pagine di vendita/opt-in e strutture funnel complete con principi CRO; redesign completo del sito per un'azienda del gruppo.",
+      en: "Created sales/opt-in pages and complete funnel structures, applying CRO principles; delivered a full website redesign for a group company.",
     },
   },
   {
-    org: "Oro, Incenso & Mirra",
-    role: { it: "Graphic Designer", en: "Graphic Designer" },
+    org: "Growtize Holding",
+    role: { it: "Junior Web & UX Designer", en: "Junior Web & UX Designer" },
+    type: { it: "Collaborazione freelance", en: "Freelance collaboration" },
+    period: { it: "Novembre 2025 – Giugno 2026", en: "November 2025 – June 2026" },
     desc: {
-      it: "Grafiche promozionali e contenuti social.",
-      en: "Designed promotional graphics and social content.",
+      it: "Progettazione e sviluppo di landing page e funnel (Figma → ClickFunnels/WordPress) e asset visivi per social e YouTube.",
+      en: "Designed and built landing pages and funnels (Figma → ClickFunnels/WordPress), plus supporting visual assets for social and YouTube.",
+    },
+  },
+  {
+    org: "@lifestyle_archive_",
+    role: { it: "Brand & Visual Designer", en: "Brand & Visual Designer" },
+    type: { it: "Progetto personale (attualmente interrotto)", en: "Personal project (currently paused)" },
+    period: { it: "2026 – Presente", en: "2026 – Present" },
+    desc: {
+      it: "Art direction e content design editoriale (carousel/reel), video editing e sistema visivo per un archivio lifestyle digitale.",
+      en: "Art direction and editorial content design (carousels/reels), plus video editing and visual system for a digital lifestyle archive.",
+    },
+  },
+  {
+    org: "@lostframe.cine",
+    role: { it: "Brand & Visual Designer", en: "Brand & Visual Designer" },
+    type: { it: "Progetto personale (in corso)", en: "Personal project (ongoing)" },
+    period: { it: "2026 – Presente", en: "2026 – Present" },
+    desc: {
+      it: "Costruzione di brand identity e design system (colore, tipografia, componenti), applicati a template social riutilizzabili in più formati.",
+      en: "Built brand identity + design system (color, type, components) and applied it to reusable social templates across formats.",
     },
   },
 ];

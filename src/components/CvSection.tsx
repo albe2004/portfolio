@@ -68,7 +68,12 @@ export default function CvSection({ onCv }: CvSectionProps) {
                             {e.role[lang]}
                           </span>
                         </div>
-                        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-soft">
+                        <p className="mt-2 text-xs font-bold uppercase tracking-wider text-mist">
+                          <span className="text-ink">{e.period[lang]}</span>
+                          <span className="mx-2">·</span>
+                          {e.type[lang]}
+                        </p>
+                        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
                           {e.desc[lang]}
                         </p>
                       </div>

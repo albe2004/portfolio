@@ -125,7 +125,7 @@ export function downloadCvPdf(lang: Lang) {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
     doc.setTextColor(MIST.r, MIST.g, MIST.b);
-    doc.text(clean(`- ${e.role[lang]}`), M + 5, y + 4.4);
+    doc.text(clean(`${e.role[lang]}  |  ${e.period[lang]}  |  ${e.type[lang]}`), M + 5, y + 4.4);
 
     doc.setFontSize(9);
     doc.setTextColor(SOFT.r, SOFT.g, SOFT.b);
