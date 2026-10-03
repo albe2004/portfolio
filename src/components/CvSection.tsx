@@ -38,7 +38,7 @@ export default function CvSection({ onCv }: CvSectionProps) {
                 </button>
                 <p className="mt-4 flex items-center gap-2 text-xs text-mist">
                   <FileCheck2 className="h-3.5 w-3.5 text-violet" />
-                  PDF · IT/EN · A4
+                  PDF · IT / EN
                 </p>
               </Reveal>
             </div>

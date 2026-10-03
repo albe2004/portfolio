@@ -1,8 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { LangProvider, useLang } from "@/lib/lang";
-import { downloadCvPdf } from "@/lib/cvPdf";
 import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
@@ -26,14 +25,30 @@ function ScrollProgress() {
 
 function Shell() {
   const { lang, strings: S } = useLang();
-  const [toast, setToast] = useState(false);
+  const [toast, setToast] = useState<null | "ok" | "missing">(null);
   const timer = useRef<number | null>(null);
 
-  const handleCv = useCallback(() => {
-    downloadCvPdf(lang);
-    setToast(true);
+  /* Il CV è un file che carichi tu in public/downloads: cv-it.pdf e cv-en.pdf */
+  const handleCv = useCallback(async () => {
+    const file = lang === "it" ? "downloads/cv-it.pdf" : "downloads/cv-en.pdf";
+    let status: "ok" | "missing" = "missing";
+    try {
+      const r = await fetch(file, { method: "HEAD" });
+      if (r.ok && (r.headers.get("content-type") ?? "").includes("pdf")) status = "ok";
+    } catch {
+      /* file non raggiungibile */
+    }
+    if (status === "ok") {
+      const a = document.createElement("a");
+      a.href = file;
+      a.download = lang === "it" ? "Andrea-Alberici-CV-IT.pdf" : "Andrea-Alberici-CV-EN.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+    setToast(status);
     if (timer.current) window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setToast(false), 2600);
+    timer.current = window.setTimeout(() => setToast(null), 2600);
   }, [lang]);
 
   return (
@@ -63,10 +78,18 @@ function Shell() {
             className="fixed bottom-6 left-1/2 z-[90] flex -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-5 py-3.5 text-sm font-bold text-paper shadow-lift"
             role="status"
           >
-            <span className="flex h-5.5 w-5.5 items-center justify-center rounded-full bg-volt">
-              <Check className="h-3.5 w-3.5 text-ink" strokeWidth={3} />
+            <span className={`flex h-5.5 w-5.5 items-center justify-center rounded-full ${toast === "ok" ? "bg-volt" : "bg-white/80"}`}>
+              {toast === "ok" ? (
+                <Check className="h-3.5 w-3.5 text-ink" strokeWidth={3} />
+              ) : (
+                <X className="h-3.5 w-3.5 text-ink" strokeWidth={3} />
+              )}
             </span>
-            {S.cv.downloaded}
+            {toast === "ok"
+              ? S.cv.downloaded
+              : lang === "it"
+                ? "CV non ancora disponibile"
+                : "CV not available yet"}
           </motion.div>
         )}
       </AnimatePresence>

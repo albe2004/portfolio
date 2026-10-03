@@ -50,7 +50,7 @@ export default function Nav({ onCv }: NavProps) {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
-        className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
+        className="fixed inset-x-0 top-4 z-[65] flex justify-center px-4"
       >
         <div
           className={`flex w-full max-w-5xl items-center justify-between gap-2 rounded-full border px-3 py-2 pl-5 transition-all duration-500 ${

@@ -278,7 +278,7 @@ export default function SideWorks() {
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className={`mt-12 flex gap-5 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-7 ${
+        className={`relative z-[61] mt-12 flex gap-5 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-7 ${
           dragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{ paddingInline: SIDE }}
