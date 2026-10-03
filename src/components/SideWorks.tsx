@@ -24,8 +24,9 @@ async function resolveWork(w: SideWork): Promise<SideWork | null> {
   return null;
 }
 
-/** velocità dello scorrimento automatico, in pixel al secondo */
-const SPEED = 45;
+/** Velocità dello scorrimento automatico, in pixel al secondo.
+ *  Più alto = più veloce (es. 60 lento, 90 medio, 140 veloce). */
+const SPEED = 100;
 /** quante volte viene ripetuto l'elenco per ottenere il giro infinito */
 const SETS = 4;
 
@@ -69,14 +70,6 @@ export default function SideWorks() {
   const [dragging, setDragging] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
-
-  /* se il sistema chiede "movimento ridotto" parto in pausa: il pulsante permette di avviarlo */
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      st.current.userPaused = true;
-      setPaused(true);
-    }
-  }, []);
 
   const togglePlay = () => {
     const s = st.current;
