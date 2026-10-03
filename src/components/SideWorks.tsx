@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play, X } from "lucide-react";
 import Img from "@/components/Img";
 import { Reveal } from "@/components/Reveal";
 import { EASE, useLang } from "@/lib/lang";
@@ -63,10 +63,27 @@ export default function SideWorks() {
     visible: false,
     hold: false, // cursore/dito sopra la fila
     modal: false, // ingrandimento aperto
+    userPaused: false, // messo in pausa dal pulsante (o movimento ridotto)
     resumeAt: 0, // non ripartire prima di questo istante
   });
   const [dragging, setDragging] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  /* se il sistema chiede "movimento ridotto" parto in pausa: il pulsante permette di avviarlo */
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      st.current.userPaused = true;
+      setPaused(true);
+    }
+  }, []);
+
+  const togglePlay = () => {
+    const s = st.current;
+    s.userPaused = !s.userPaused;
+    s.resumeAt = performance.now() + 200;
+    setPaused(s.userPaused);
+  };
 
   /** larghezza di un giro completo (distanza tra il primo elemento di due set consecutivi) */
   const loopWidth = useCallback(() => {
@@ -81,7 +98,6 @@ export default function SideWorks() {
   useEffect(() => {
     const el = track.current;
     if (!el) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
     let prev = performance.now();
 
@@ -97,7 +113,7 @@ export default function SideWorks() {
           s.last = el.scrollLeft;
           s.ready = true;
         }
-        if (s.ready && s.visible && !reduce && !s.hold && !s.modal && now >= s.resumeAt) {
+        if (s.ready && s.visible && !s.userPaused && !s.hold && !s.modal && now >= s.resumeAt) {
           s.pos += (SPEED * dt) / 1000;
           s.pos = L + ((((s.pos - L) % L) + L) % L);
           el.scrollLeft = s.pos;
@@ -154,8 +170,9 @@ export default function SideWorks() {
   };
 
   /* pausa quando c'è il cursore o il dito sopra */
-  const onPointerEnter = () => {
-    st.current.hold = true;
+  const onPointerEnter = (e: React.PointerEvent) => {
+    /* mouse: ferma solo con un movimento vero (non quando è la pagina a scorrere sotto il cursore) */
+    if (e.pointerType !== "mouse") st.current.hold = true;
   };
   const onPointerLeave = (e: React.PointerEvent) => {
     st.current.hold = false;
@@ -169,6 +186,7 @@ export default function SideWorks() {
     drag.current = { active: true, moved: false, x: e.clientX, left: track.current.scrollLeft };
   };
   const onPointerMove = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") st.current.hold = true;
     const d = drag.current;
     if (!d.active || !track.current) return;
     const dx = e.clientX - d.x;
@@ -206,7 +224,7 @@ export default function SideWorks() {
   if (n === 0) return null;
 
   const arrowBtn =
-    "flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-all duration-300 hover:bg-white hover:text-ink";
+    "flex shrink-0 h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white transition-all duration-300 hover:bg-white hover:text-ink";
 
   return (
     <section
@@ -231,11 +249,20 @@ export default function SideWorks() {
           </p>
         </Reveal>
 
-        <div className="hidden gap-3 md:flex">
-          <button type="button" aria-label={it ? "Indietro" : "Previous"} onClick={() => scrollByPage(-1)} className={arrowBtn}>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            aria-label={paused ? (it ? "Riprendi lo scorrimento" : "Play") : it ? "Metti in pausa" : "Pause"}
+            title={paused ? (it ? "Riprendi" : "Play") : it ? "Pausa" : "Pause"}
+            onClick={togglePlay}
+            className={arrowBtn}
+          >
+            {paused ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+          </button>
+          <button type="button" aria-label={it ? "Indietro" : "Previous"} onClick={() => scrollByPage(-1)} className={`${arrowBtn} hidden md:flex`}>
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <button type="button" aria-label={it ? "Avanti" : "Next"} onClick={() => scrollByPage(1)} className={arrowBtn}>
+          <button type="button" aria-label={it ? "Avanti" : "Next"} onClick={() => scrollByPage(1)} className={`${arrowBtn} hidden md:flex`}>
             <ArrowRight className="h-5 w-5" />
           </button>
         </div>
@@ -274,7 +301,7 @@ export default function SideWorks() {
                 src={w.src}
                 alt={w.title ?? `${it ? "Lavoro" : "Work"} ${(k % B) % n + 1}`}
                 priority
-                className="block h-[360px] w-auto select-none md:h-[520px]"
+                className="block h-[360px] w-auto max-w-[85vw] select-none object-contain md:h-[520px] md:max-w-[min(80vw,1000px)]"
                 fallbackClassName="h-[360px] w-[250px] md:h-[520px] md:w-[360px]"
               />
             </button>
