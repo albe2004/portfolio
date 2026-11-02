@@ -260,6 +260,18 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "sineforma-rebranding",
+    cat: "brand",
+    img: "img/p-sineforma.jpg",
+    file: "downloads/sineforma-rebranding.pdf",
+    tint: "#1d3a9c",
+    title: { it: "Sineforma — Rebranding", en: "Sineforma — Rebranding" },
+    desc: {
+      it: "Proposta di rebranding per Sineforma, associazione che organizza eventi artistici. Il logo nasce dal nome: \"sine\" è solo contorno, \"forma\" è pieno. Ho definito colori, font, regole per i social e le applicazioni, da post e locandine a merch e affissioni.",
+      en: "Rebranding proposal for Sineforma, an association that organizes art events. The logo comes from the name: \"sine\" is only an outline, \"forma\" is filled. I defined colors, fonts, social rules and applications, from posts and flyers to merch and outdoor.",
+    },
+  },
+  {
     slug: "lifestyle-archive",
     cat: "brand",
     img: "img/p-archive.png",
